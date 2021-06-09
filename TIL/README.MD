@@ -12,3 +12,6 @@ All students rescieve intresting home work, i think i can start make it tomorrow
 Today i chandged my location to Rostov-on-Don. Now my localtime is GMT+3 and i need to adopt.
 When i was going to airport im download flask documentation to my laptop. I hope, i will have enough time for training.
 
+### Day 10
+3000 km in car... Im not keep up my study work! Miss two lessons... Need to speed up!
+
