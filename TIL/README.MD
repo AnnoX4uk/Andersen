@@ -15,3 +15,7 @@ When i was going to airport im download flask documentation to my laptop. I hope
 ### Day 10
 3000 km in car... Im not keep up my study work! Miss two lessons... Need to speed up!
 
+### Day 13
+First place with global network, 3 lessons miss. 
+But today i work with my first homework. Emoji in python console ? Emoji in xterm ? It's wonderful!
+
