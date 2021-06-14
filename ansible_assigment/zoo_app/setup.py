@@ -9,7 +9,7 @@ setup(
     license='',
     packages=find_packages(),
     install_requires=[
-        'flask'
+        'flask, emoji'
     ],
     zip_safe=False
 )
