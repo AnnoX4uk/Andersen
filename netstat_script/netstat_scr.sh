@@ -72,8 +72,10 @@ if [ -z "$ip" ]; then
 fi
 
 #convert netstat output to simple IP-addresses
-ip=$(echo "$ip" |cut -d: -f1 | sort | uniq -c | sort | tail -n5 | grep -oP '(\d+\.){3}\d+')
+ip=$(echo "$ip" |cut -d: -f1 | sort | uniq -c | sort | tail -n"$out_lines" | grep -oP '(\d+\.){3}\d+')
 
-echo $ip
-
-# cut -d: -f1 | sort | uniq -c | sort | tail -n5 | grep -oP '(\d+\.){3}\d+' | while read IP ; do whois $IP | awk -F':' '/^Organization/ {print $2}' ; done
+#output organzation
+for addr in $ip; do
+    org=$(whois "$addr")
+    echo "$org" | awk -F':' '/^Organization/ {print $2}'
+done
