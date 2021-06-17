@@ -1,4 +1,18 @@
 #!/bin/bash
+#Simple script writen by AnnoX4uk. Useful for check active connections for some application
+#See README.md for more information or run script without any options. 
+
+#check whois
+if [[ -z "$(which whois)" ]]; then
+    echo "Whois package not installed. Please install whois and try again"
+    exit
+fi
+
+#check netstat
+if [[ -z "$(which netstat)" ]]; then
+    echo "Netstat package not installed. Please install netstat and try again"
+    exit
+fi
 
 #check privileges before starting
 if (($EUID != 0)) ; then
@@ -6,8 +20,10 @@ if (($EUID != 0)) ; then
     echo "If you want to see all connection set sudo before run"
 fi
 
+
 #set variables
 programm_name=''
+variable_connections=(TIME_WAIT ESTABLISHED CLOSE_WAIT LISTEN)
 connection='ESTABLISHED'
 out_lines=5
 debug='OFF'
@@ -18,6 +34,7 @@ print_usage () {
     echo "-l {LineNumbers} : number of output lines. By default output 5 lines"
     echo "-a : output all connection states. By default output ESTABLISHED only connections"
     echo "-d : debugging output"
+    echo "-c : write connection type like TIME_WAIT or ESTABLISHED or CLOSE_WAIT or LISTEN"
 }
 
 #check arguments before start
@@ -29,12 +46,21 @@ exit 1
 fi
 
 #parse arguments
-while getopts "p:l:ad" opt
+while getopts "c:p:l:ad" opt
 do
 case $opt in
 p) programm_name=$OPTARG
 ;;
 a) connection='ALL' 
+;;
+c)  if [[ " ${variable_connections[*]} " != *" $OPTARG "*  ]]; then
+        echo "Rescieve incorrect connection type, try again"
+        exit 1
+    elif [[ -z "$OPTARG" ]]; then
+        echo "Rescive no special connection states after -c, work with ESTABLISHED connections"
+    else 
+        connection=$OPTARG
+    fi
 ;;
 d) debug='ON' 
 ;;
@@ -118,5 +144,3 @@ for addr in $ip; do
     fi
     echo "$org" | awk -F':' '/^Organization/ {print $2}'
 done
-
-
