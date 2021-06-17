@@ -27,6 +27,8 @@ variable_connections=(TIME_WAIT ESTABLISHED CLOSE_WAIT LISTEN)
 connection='ESTABLISHED'
 out_lines=5
 debug='OFF'
+userfriendly=False
+whois_info='Organization'
 
 print_usage () {
     echo "Usage: netstat_scr -p {programm_name}"
@@ -35,6 +37,8 @@ print_usage () {
     echo "-a : output all connection states. By default output ESTABLISHED only connections"
     echo "-d : debugging output"
     echo "-c : write connection type like TIME_WAIT or ESTABLISHED or CLOSE_WAIT or LISTEN"
+    echo "-i : Output any info from whois. By default output only Organization info."
+    echo "-u : Userfriendly output."
 }
 
 #check arguments before start
@@ -46,7 +50,7 @@ exit 1
 fi
 
 #parse arguments
-while getopts "c:p:l:ad" opt
+while getopts "c:p:l:i:adu" opt
 do
 case $opt in
 p) programm_name=$OPTARG
@@ -64,6 +68,10 @@ c)  if [[ " ${variable_connections[*]} " != *" $OPTARG "*  ]]; then
 ;;
 d) debug='ON' 
 ;;
+i) whois_info=$OPTARG 
+;;
+u) userfriendly=True 
+;;
 l) if [[ "$OPTARG" =~ [^0-9]+ ]]; then
   echo "Incorrent line numbers in -l option. Output $out_lines lines only"
    else 
@@ -79,9 +87,10 @@ done
 if [[ "$debug" == "ON" ]]; then
     echo "Program: $programm_name\
     connection: $connection\
-    out lines: $out_lines"
-    sleep 5s
-    
+    out lines: $out_lines\
+    whois_info: $whois_info\
+    userfriendly: $userfriendly"
+    sleep 1s   
 fi
 
 
@@ -102,7 +111,7 @@ fi
 if [[ "$debug" == "ON" ]]; then
     echo "Netstat output:\
     $ip"
-    sleep 5s
+    sleep 1s
 fi
 
 
@@ -112,7 +121,7 @@ ip=$(echo "$ip" | awk '/'"$programm_name"/' {print $5}')
 if [[ "$debug" == "ON" ]]; then
     echo "Netstat app output:\
     $ip"
-    sleep 5s
+    sleep 1s
 fi
 
 #Exit if blank output
@@ -127,20 +136,46 @@ ip=$(echo "$ip" |cut -d: -f1 | sort | uniq -c | sort | tail -n"$out_lines" | gre
 if [[ "$debug" == "ON" ]]; then
     echo "Address after convert:\
     $ip"
-    sleep 5s
+    sleep 1s
 fi
 
 #output organzation
 for addr in $ip; do
     if [[ "$debug" == "ON" ]]; then
         echo "Try do whois to : $addr"
-        sleep 5s
+        sleep 1s
     fi
     org=$(whois "$addr")
     if [[ "$debug" == "ON" ]]; then
       echo "whois output:\
         $org"
-        sleep 5s
+        sleep 1s
     fi
-    echo "$org" | awk -F':' '/^Organization/ {print $2}'
+    res="$(echo "$org" | awk -F ':' '/^'$whois_info'/ {print $2}')"
+
+    #prepare output
+    if [[ $userfriendly = True ]]; then
+        if [[ -z $res ]]; then
+            echo "###############################################################"
+            echo "Application: $programm_name\
+            IP address: $addr\
+            Connection state: $connection\
+            $whois_info: Not found in your request"
+            echo "###############################################################"
+        else
+            echo "###############################################################"
+            echo "Application: $programm_name\
+            IP address: $addr\
+            Connection state: $connection\
+            $whois_info: $res"
+            echo "###############################################################"
+        fi
+    #default out
+    else
+        if [[ -z $res ]]; then
+            echo 'Have not information about your request, try another'
+        else
+            echo $res
+        fi
+    fi
 done
