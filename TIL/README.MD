@@ -19,3 +19,5 @@ When i was going to airport im download flask documentation to my laptop. I hope
 First place with global network, 3 lessons miss. 
 But today i work with my first homework. Emoji in python console ? Emoji in xterm ? It's wonderful!
 
+### Day 16
+Today i work with bash script. I learn somethink new about shell syntax. On prevuse lesson teacher told about good practise in Git, now i will try follow them.
