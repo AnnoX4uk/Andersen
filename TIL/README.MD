@@ -21,3 +21,6 @@ But today i work with my first homework. Emoji in python console ? Emoji in xter
 
 ### Day 16
 Today i work with bash script. I learn somethink new about shell syntax. On prevuse lesson teacher told about good practise in Git, now i will try follow them.
+
+### Day 17
+Target - python app. Work with him and listen lesson four in background. Need to repeat all lessons. 
