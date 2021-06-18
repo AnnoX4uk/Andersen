@@ -16,7 +16,7 @@ app = Flask(__name__)
 def index():
     # TODO: make somethink to work with GET
     if request.method == "GET":
-        return 'Your method is GET\n'
+        return 'Welcome to our zoo!\nWhat are you wont to listen ?\n'
 
     if request.method == "POST":
         print(request.content_type)
@@ -46,7 +46,7 @@ def index():
 
         except Exception as err:
             print('Got error while rescv json args: {}\n'.format(err))
-            
+
         animalsay = ''
         for i in range(0, int(data['count'])):
             animalsay = animalsay + \
@@ -57,4 +57,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run( host='0.0.0.0', port=80 )
