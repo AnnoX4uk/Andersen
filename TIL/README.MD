@@ -24,3 +24,6 @@ Today i work with bash script. I learn somethink new about shell syntax. On prev
 
 ### Day 17
 Target - python app. Work with him and listen lesson four in background. Need to repeat all lessons. 
+
+### Day 19
+My first try to learn golang. Task - write telegram bot. Seems simple, hope it was be same in execution.
