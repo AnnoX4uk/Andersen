@@ -20,7 +20,17 @@ Course started at May 31.
 ## Homeworks
 
 <details>
-<summary> Task 1 - Ansible assignment</summary>
+<summary> Task 1 - About me</summary>
+Write information about myself in ```README.md```
+</details>
+
+<details>
+<summary> Task 2 - TIL</summary>
+Small student blog. TIL - Today i'm learn!
+</details>
+
+<details>
+<summary> Task 3 - Ansible assignment</summary>
 
 
 ```markdown
@@ -74,7 +84,7 @@ Made with ❤️ by %your_name
 </details>
 
 <details>
-<summary> Task 2 - Bash netstat</summary>
+<summary> Task 4 - Bash netstat</summary>
 
 ```sh
 sudo netstat -tunapl | awk '/firefox/ {print $5}' | cut -d: -f1 | sort | uniq -c | sort | tail -n5 | grep -oP '(\d+\.){3}\d+' | while read IP ; do whois $IP | awk -F':' '/^Organization/ {print $2}' ; done
@@ -93,7 +103,7 @@ sudo netstat -tunapl | awk '/firefox/ {print $5}' | cut -d: -f1 | sort | uniq -c
 </details>
 
 <details>
-<summary> Task 3 - Golang Telegram bot</summary>
+<summary> Task 5 - Golang Telegram bot</summary>
 
 - Worked Telegram bot
 - Writen on Golang
@@ -105,7 +115,7 @@ sudo netstat -tunapl | awk '/firefox/ {print $5}' | cut -d: -f1 | sort | uniq -c
 </details>
 
 <details>
-<summary> Task 4 - Github creativity</summary>
+<summary> Task 6 - Github creativity</summary>
 
 ```markdown
 ## Unleash your creativity with GitHub
@@ -126,7 +136,7 @@ sudo netstat -tunapl | awk '/firefox/ {print $5}' | cut -d: -f1 | sort | uniq -c
 </details>
 
 <details>
-<summary> Task 5 - Docker container </summary>
+<summary> Task 7 - Docker container </summary>
 
 Build docker container for application from Task 1
 
@@ -138,7 +148,7 @@ Build docker container for application from Task 1
 
 <details>
 
-<summary> Task 6 - Cloud formation setup </summary>
+<summary> Task 8 - Cloud formation setup </summary>
 
 - Write AWS CloudFormation template for diagram
   
@@ -150,10 +160,11 @@ Build docker container for application from Task 1
 
 | Task                  | Status                  | link                              |
 |-----------------------|-------------------------|-----------------------------------|
+| About me              | work in progress 10%    | [AboutMe](AboutMe/)               |
+| TIL                   | work in progress        | [TIL](TIL/)                       |
 | Ansible assignment    | work in progress    70% | [zoo_app](ansible_assigment/)     |
 | Bash netstat          | complete                | [netstat_script](netstat_script/) |
 | Golang Telegram bot   | work in progress  95%   | [tg_bot](tg_bot/)                 |
 | Github creativity     | not started             |                                   |
 | Docker container      | not started             |                                   |
 | Cloud formation setup | not started             |                                   |
-
