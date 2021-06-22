@@ -3,6 +3,7 @@
 - [Description](#description)
   - [Rules](#rules)
 - [Homeworks](#homeworks)
+- [Homework status](#homework-status)
 
 ## Description
 
@@ -144,3 +145,15 @@ Build docker container for application from Task 1
 ![AWS diagram](https://imgur.com/n9zAcHn.png)
 
 </details>
+
+## Homework status
+
+| Task                  | Status                  | link                                       |
+|-----------------------|-------------------------|--------------------------------------------|
+| Ansible assignment    | work in progress    70% | [zoo_app](ansible_assigment/README.md)     |
+| Bash netstat          | complete                | [netstat_script](netstat_script/README.md) |
+| Golang Telegram bot   | work in progress  95%   | [tg_bot](tg_bot/README.md)                 |
+| Github creativity     | not started             |                                            |
+| Docker container      | not started             |                                            |
+| Cloud formation setup | not started             |                                            |
+
