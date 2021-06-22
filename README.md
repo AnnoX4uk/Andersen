@@ -141,6 +141,6 @@ Build docker container for application from Task 1
 
 - Write AWS CloudFormation template for diagram
   
-![AWS diagram](https://imgur.com/n9zAcHn)
+![AWS diagram](https://imgur.com/n9zAcHn.png)
 
 </details>
