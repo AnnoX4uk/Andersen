@@ -160,7 +160,7 @@ Build docker container for application from Task 1
 
 | Task                  | Status                  | link                              |
 |-----------------------|-------------------------|-----------------------------------|
-| About me              | work in progress 10%    | [AboutMe](AboutMe/)               |
+| About me              | complete                | [AboutMe](AboutMe/)               |
 | TIL                   | work in progress        | [TIL](TIL/)                       |
 | Ansible assignment    | work in progress    70% | [zoo_app](ansible_assigment/)     |
 | Bash netstat          | complete                | [netstat_script](netstat_script/) |
