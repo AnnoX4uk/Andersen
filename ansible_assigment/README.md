@@ -6,7 +6,7 @@ Current application take json via http POST and out what are animal say
 
 Really, you can do somethink like this:
 
-![ ](https://j.gifs.com/BrL18J.gif)
+[![Demo](https://j.gifs.com/VvPJ2B.gif)](https://www.youtube.com/watch?v=jofNR_WkoCE)
 
 Application listen tcp port 8080 on system. Nginx uset to proxy your request to application port.
 
@@ -68,5 +68,7 @@ curl -XPOST -d'{"animal":"{animalname}", "sound":"{sound}, "count": 3}' http://{
 Installing :
 [![asciicast](https://asciinema.org/a/c4BZOp87yCilSutAc4OfOICDL.svg)](https://asciinema.org/a/c4BZOp87yCilSutAc4OfOICDL)
 
-Usage:
+Usage: 
 ```Coming soon```
+
+```
