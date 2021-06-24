@@ -1,0 +1,99 @@
+---
+  - name         : Install zoo_app
+    hosts        : all
+    become       : yes
+    become_method: su
+    become_user  : root
+
+    tasks:
+
+    - name: Install packages - pip, nginx, iptables 
+      apt:
+        pkg:
+          - python3-pip
+          - nginx
+          - iptables
+        state: present
+        update_cache: no
+
+    - name: Install flask
+      pip:
+        name: flask
+        executable: pip3
+        state: present
+
+    - name: Install emoji module
+      pip:
+        name: emoji
+        executable: pip3
+        state: present
+
+    - name: Remove default nginx config
+      file:
+        state: absent
+        path: /etc/nginx/sites-enabled/default
+
+    - name: Creating nginx zoo_app config
+      copy:
+        dest: "/etc/nginx/sites-available/zoo_app"
+        mode: 0644
+        owner: root
+        content: |
+          server {
+            listen 80 default_server;
+            location / {
+              proxy_pass http://127.0.0.1:8080;
+             }
+          }
+
+
+    - name: Create symlink for zoo_app to sites-enabled
+      file:
+        src: /etc/nginx/sites-available/zoo_app
+        dest: /etc/nginx/sites-enabled/zoo_app
+        state: link
+
+    - name: Copy zoo_app to /opt directory
+      copy:
+        src: "{{ playbook_dir }}/zoo_app"
+        dest: /opt/
+
+    - name: Creating systemd service
+      copy:
+        dest: "/etc/systemd/system/zoo_app.service"
+        mode: 0644
+        owner: root
+        content: |
+          [Unit]
+          Description=ROT13 demo service
+          After=network.target
+          StartLimitIntervalSec=0
+          [Service]
+          Type=simple
+          Restart=always
+          RestartSec=1
+          User=root
+          ExecStart=/usr/bin/python3 /opt/zoo_app/__init__.py
+          [Install]
+          WantedBy=multi-user.target
+    
+    - name: Enable zoo_app service
+      service: 
+        name : zoo_app.service 
+        enabled: yes
+    
+    - name: Start zoo_app service
+      service: 
+        name: zoo_app.service 
+        state: started
+
+    - name: Enable nginx service
+      service: 
+        name : nginx.service 
+        enabled: yes    
+    
+    - name: Restart nginx to apply config
+      service:
+        name: nginx
+        state: restarted
+        enabled: yes   

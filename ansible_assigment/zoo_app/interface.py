@@ -16,7 +16,7 @@ app = Flask(__name__)
 def index():
     # TODO: make somethink to work with GET
     if request.method == "GET":
-        return 'Welcome to our zoo!\nWhat are you wont to listen ?\n'
+        return 'Welcome to our zoo!\nWhat are you want to listen ?\n'
 
     if request.method == "POST":
         print(request.content_type)
@@ -57,4 +57,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run( host='0.0.0.0', port=80 )
+    app.run()

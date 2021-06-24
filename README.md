@@ -32,7 +32,6 @@ Small student blog. TIL - Today i'm learn!
 <details>
 <summary> Task 3 - Ansible assignment</summary>
 
-
 ```markdown
 # Ansible assignment
 ## Create and deploy your own service
@@ -100,6 +99,7 @@ sudo netstat -tunapl | awk '/firefox/ {print $5}' | cut -d: -f1 | sort | uniq -c
 - ⭐ Count connections to organization
 - ⭐ Have another information from whois
 - ⭐ Work with ss and use other utilites
+
 </details>
 
 <details>
