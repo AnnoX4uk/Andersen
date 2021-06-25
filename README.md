@@ -158,13 +158,13 @@ Build docker container for application from Task 1
 
 ## Homework status
 
-| Task                  | Status                  | link                              |
-|-----------------------|-------------------------|-----------------------------------|
-| About me              | complete                | [AboutMe](AboutMe/)               |
-| TIL                   | work in progress        | [TIL](TIL/)                       |
-| Ansible assignment    | work in progress    70% | [zoo_app](ansible_assigment/)     |
-| Bash netstat          | complete                | [netstat_script](netstat_script/) |
-| Golang Telegram bot   | work in progress  95%   | [tg_bot](tg_bot/)                 |
-| Github creativity     | not started             |                                   |
-| Docker container      | not started             |                                   |
-| Cloud formation setup | not started             |                                   |
+| Task                  | Status                | link                              |
+|-----------------------|-----------------------|-----------------------------------|
+| About me              | complete              | [AboutMe](AboutMe/)               |
+| TIL                   | work in progress      | [TIL](TIL/)                       |
+| Ansible assignment    | complete              | [zoo_app](ansible_assigment/)     |
+| Bash netstat          | complete              | [netstat_script](netstat_script/) |
+| Golang Telegram bot   | work in progress  95% | [tg_bot](tg_bot/)                 |
+| Github creativity     | not started           |                                   |
+| Docker container      | not started           |                                   |
+| Cloud formation setup | not started           |                                   |

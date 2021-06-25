@@ -6,20 +6,55 @@ from flask import Flask, request
 # TODO: make config file for service
 sign = 'Made with ❤️  by AnnoX4uk\n'
 
+# Big thx  MikeKozhevnikov for qrcode idea, i think it's awesome!
+# Look his amazing repository
+
+curl_funny_out = 'Big thx  MikeKozhevnikov for idea!' + '''
+█████████████████████████████████████
+█████████████████████████████████████
+████ ▄▄▄▄▄ █▀▀ ██▀█▀▀  ▄▀█ ▄▄▄▄▄ ████
+████ █   █ █▄▀██▀▀▀▄█▄█▄▄█ █   █ ████
+████ █▄▄▄█ █ ▄ █ ██▀▄  ▀██ █▄▄▄█ ████
+████▄▄▄▄▄▄▄█ █ ▀▄█ █▄▀ ▀▄█▄▄▄▄▄▄▄████
+████▄▄█ █▀▄ █▀█  ▀ █ ▀▀█▀█ ▄▄▀▄▄▀████
+████▀▀█  ▀▄▄ ▀▀  ▀██ ▄▀▄▄█▄▀▀▄  █████
+████▄▀██▀▀▄▄█▀▄ █ █▄▄ █ ▄ ▄▀█▄█▄▄████
+████▄▀▄▄▄█▄█▄▄█ █ ▀█▄  ▀ ▄▀██ ▄ ▄████
+████▄ █▄▀▀▄ ▄  █ █▀▄▀▄▀▄▄▄▀ █▀█▄▀████
+████▄█   ▀▄▄██▄▄ ▄▀▀█▀█▀▄▄ ▄███  ████
+████▄██▄██▄▄▀ █▀█▀▄▄█▀█▀ ▄▄▄ █ ▀▀████
+████ ▄▄▄▄▄ █▄█ ██▀▄█▀▄ █ █▄█ ▀▀▄▀████
+████ █   █ █▀▄ ▀ ████▄█▀▄▄ ▄ ▀▀▀█████
+████ █▄▄▄█ █▀▄▄█ ▀ █▀ ▄▄▀▄██ ▄▄▀▄████
+████▄▄▄▄▄▄▄█▄██▄▄▄▄▄▄▄▄█▄██▄▄██▄█████
+█████████████████████████████████████
+█████████████████████████████████████
+'''
+funny_out_browser = '<iframe width="560" height="315"\
+        src="https://www.youtube.com/embed/jofNR_WkoCE"\
+        title="YouTube video player" frameborder="0" allow="accelerometer;\
+        autoplay; clipboard-write; encrypted-media; gyroscope;\
+        picture-in-picture" allowfullscreen></iframe>'
+
+
 def emojiout(text):
     r = emoji.emojize(':' + text + ':')
     return(r.replace(':', ''))
 
+
 app = Flask(__name__)
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     # TODO: make somethink to work with GET
     if request.method == "GET":
-        return 'Welcome to our zoo!\nWhat are you want to listen ?\n'
+        if 'curl' in request.user_agent.string:
+            return (curl_funny_out)
+        else:
+            return(funny_out_browser)
 
     if request.method == "POST":
-        print(request.content_type)
         try:
             data = request.get_json(force=True)
         except Exception as err:

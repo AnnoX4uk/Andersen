@@ -6,6 +6,41 @@
     become_user  : root
 
     tasks:
+    
+    - name: Copy public key
+      authorized_key:
+        user: "{{ lookup('env','USER') }}"
+        state: present
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+    - name: Set sshd authentification metod to public-key only.
+      lineinfile: 
+        dest: /etc/ssh/sshd_config 
+        regexp: '^#?AuthenticationMethods' 
+        line: 'AuthenticationMethods publickey'
+
+    - name: Disable sshd password base authentification
+      lineinfile: 
+        dest: /etc/ssh/sshd_config 
+        regexp: '^#?PasswordAuthentication' 
+        line: 'PasswordAuthentication no'
+
+    - name: Enable sshd public-key authentification
+      lineinfile: 
+        dest: /etc/ssh/sshd_config 
+        regexp: '^#?PubkeyAuthentication'
+        line: 'PubkeyAuthentication yes'
+
+    - name: Permit RootLogin
+      lineinfile: 
+        dest: /etc/ssh/sshd_config 
+        regexp: '^PermitRootLogin'
+        line: 'PermitRootLogin No'
+
+    - name: Reload sshd to apply config
+      service: 
+        name: sshd
+        state: reloaded
 
     - name: Install packages - pip, nginx, iptables 
       apt:
@@ -46,17 +81,31 @@
              }
           }
 
-
     - name: Create symlink for zoo_app to sites-enabled
       file:
         src: /etc/nginx/sites-available/zoo_app
         dest: /etc/nginx/sites-enabled/zoo_app
         state: link
 
+    - name: Check /opt directory exists
+      stat:
+        path: /opt
+      register: check_opt
+
+    - name: Create /opt dir
+      file:
+        path: /opt
+        state: directory
+        owner: root
+        mode: 0755
+      when: not check_opt.stat.exists
+
     - name: Copy zoo_app to /opt directory
       copy:
         src: "{{ playbook_dir }}/zoo_app"
         dest: /opt/
+        owner: root
+        mode: 0755
 
     - name: Creating systemd service
       copy:
@@ -73,7 +122,7 @@
           Restart=always
           RestartSec=1
           User=root
-          ExecStart=/usr/bin/python3 /opt/zoo_app/__init__.py
+          ExecStart=/usr/bin/python3 /opt/zoo_app
           [Install]
           WantedBy=multi-user.target
     
@@ -96,4 +145,74 @@
       service:
         name: nginx
         state: restarted
-        enabled: yes   
+        enabled: yes
+
+    - name : Allow incoming ESTABLISHED and RELATED
+      iptables:
+        chain: INPUT
+        ctstate: ESTABLISHED,RELATED
+        jump: ACCEPT
+      become: yes
+
+    - name : Allow incoming from localhost
+      iptables:
+        chain: INPUT
+        source: 127.0.0.1
+        jump: ACCEPT
+        comment: Accept all from localhost.
+      become: yes  
+   
+    - name : Allow incoming ssh
+      iptables:
+        chain: INPUT
+        protocol: tcp
+        destination_port: 22
+        ctstate: NEW
+        syn: match
+        jump: ACCEPT
+        comment: Accept new SSH connections.
+      become: yes
+
+    - name : Allow incoming HTTP
+      iptables:
+        chain: INPUT
+        protocol: tcp
+        destination_port: 80
+        ctstate: NEW
+        syn: match
+        jump: ACCEPT
+        comment: Accept new HTTP connections.
+      become: yes
+      
+    - name : Allow incoming HTTPS
+      iptables:
+        chain: INPUT
+        protocol: tcp
+        destination_port: 443
+        ctstate: NEW
+        syn: match
+        jump: ACCEPT
+        comment: Accept new HTTP connections.
+      become: yes
+      
+
+    - name: Drop not accepted input
+      iptables:
+        chain: INPUT
+        jump: DROP
+        comment: Drop all incoming.
+      become: yes
+
+    # Default iptables module can't save rules
+    - name: Save iptable rules
+      shell:
+        cmd: /usr/sbin/iptables-save > /etc/iptables.up.rules
+    
+    - name: Create iptables autostart rules
+      copy:
+        dest: "/etc/network/if-up.d/iptables-restore"
+        mode: 0744
+        owner: root
+        content: |
+          #!/bin/bash
+          /usr/sbin/iptables-restore < /etc/iptables.up.rules
