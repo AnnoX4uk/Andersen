@@ -1,12 +1,19 @@
 FROM python:3.7-alpine as base
-FROM base as builder
+FROM base as builder-stage1
 RUN mkdir /install
 WORKDIR /install
-COPY requirements.txt /requirements.txt
-RUN pip install --prefix=/install -r /requirements.txt
+RUN pip install --prefix=/install flask emoji
+FROM base as builder-stage2
+RUN mkdir /install
+WORKDIR /install
+RUN wget https://github.com/AnnoX4uk/Andersen/archive/refs/heads/main.zip
+RUN unzip ./main.zip
+RUN cp -Rf /install/Andersen-main/ansible_assigment/zoo_app /install/
+RUN rm -rf ./*main*
 FROM base
-COPY --from=builder /install /usr/local
-COPY . /app
+RUN mkdir /app
+COPY --from=builder-stage1 /install /usr/local
+COPY --from=builder-stage2 /install/zoo_app /app
 WORKDIR /app
 EXPOSE 8080
-CMD ["python3", "/app/zoo_app"]
+CMD ["python3", "/app"]
