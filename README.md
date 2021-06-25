@@ -166,5 +166,5 @@ Build docker container for application from Task 1
 | Bash netstat          | complete              | [netstat_script](netstat_script/) |
 | Golang Telegram bot   | work in progress  95% | [tg_bot](tg_bot/)                 |
 | Github creativity     | not started           |                                   |
-| Docker container      | not started           |                                   |
+| Docker container      | complete              | [docker](docker_zoo_app/)         |
 | Cloud formation setup | not started           |                                   |
