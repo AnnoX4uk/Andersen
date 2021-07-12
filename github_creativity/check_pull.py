@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import requests
 import argparse
-from termcolor import colored
+import colored
 
 
 parser = argparse.ArgumentParser(description='This script check open pull requests for a repository.\n\
@@ -28,18 +28,30 @@ else:
 
 if r_pulls.status_code == 200:
     open_pulls = r_pulls.json()
-    print ('Found [{}] opened pull requests'.format(colored(str(len(open_pulls)), 'green')))
+    print ('Found [{}] opened pull requests'.format(
+        colored.fg('green')+ str(len(open_pulls)) + colored.style.RESET))
     productive_contributors = []
     uniq_contributors = []
+    contributor_labels = {}
     for pull_req in open_pulls:
         if pull_req['user']['login'] in uniq_contributors:
             productive_contributors.append(pull_req['user']['login'])
         else:
+            contributor_labels.update({pull_req['user']['login']:[]})
             uniq_contributors.append(pull_req['user']['login'])
+        if len (pull_req['labels']) > 0 :
+            for label in pull_req['labels']:
+                newlabel = colored.fg('#' + label['color']) + label['name'] + colored.style.RESET
+                contributor_labels[pull_req['user']['login']].append(newlabel)
+
 
     print('Most productive contributors are:')
     for username in set(productive_contributors):
-        print('{}: {}'.format(colored(username, 'cyan'), colored(str(productive_contributors.count(username)+1), 'magenta')))
+        print('{}: {}. Labels: {}'.format(
+            colored.fg('green') + colored.attr('bold') + username +colored.style.RESET, 
+            colored.fg('magenta') + str(productive_contributors.count(username)+1) +colored.style.RESET,
+            ' '.join(set(contributor_labels[username]))
+        ))
 
 else:
     print('Got {} status of response'.format(r_pulls.status_code))
