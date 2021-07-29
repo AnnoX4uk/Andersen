@@ -44,6 +44,8 @@ After each commit to *main* branch of application repository, Digital Ocean resc
 
 I think it is easiest way to deploy simple application in cloud.
 
+![diagram1](/exam/media/diagram1.jpg)
+
 ### Need to do
 
 - Monitoring all processes. Right now, i dont know then new version of application deploy, status of deploy, work application or not. This is a very very bad.
