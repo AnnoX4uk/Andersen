@@ -51,4 +51,6 @@ I think it is easiest way to deploy simple application in cloud.
 - Monitoring all processes. Right now, i dont know then new version of application deploy, status of deploy, work application or not. This is a very very bad.
 - Logging. It is simple, but very effective way for debugging.
 - Infrastructure. Right now, it is two simple application. I think, if i have more time, i will place two instance to AWS or DO for each application in different zones, make nginx proxy and set up load-balancer.
-- Tests. I have not enough time to write correct unit/integration tests, i never do it before. I think i will do it later.
+- Tests. I have not enough time to write correct tests, i never do it before. I think i will do it later.
+
+![diagram2](/exam/media/diagram2.jpg)
